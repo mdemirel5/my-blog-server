@@ -1,4 +1,3 @@
 {
-    "jwtPrivateKey": "myblog_jwtPrivateKey",
-    "db": "myblog_db"
+    "jwtPrivateKey": "myblog_jwtPrivateKey"
 }

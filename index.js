@@ -20,7 +20,7 @@ mongoose.connect(database.db, {
     useUnifiedTopology: true,
     useCreateIndex: true
 })
-    .then(console.log('connected to mongoDb successfully'))
+    .then(console.log('connected to mongoDb successfully', database.db))
     .catch('could not connect to mongoDb');
 
 app.use(express.json());
