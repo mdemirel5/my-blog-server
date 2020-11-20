@@ -3,6 +3,7 @@ const router = express.Router();
 const mongoose = require('mongoose');
 const { Blog, validateBlog } = require('../models/blog');
 const auth = require('../middleware/auth');
+const { User } = require('../models/user');
 
 
 router.get('/', async (req, res) => {
@@ -20,9 +21,17 @@ router.post('/', async (req, res) => {
     const { error } = validateBlog(req.body);
     if (error) return res.status(400).send(error.details[0].message);
 
+    const user = await User.findById(req.body.userId);
+    if (!user) return res.status(400).send('Invalid user');
+
+
     let blog = new Blog({
         title: req.body.title,
-        content: req.body.content
+        content: req.body.content,
+        user: {
+            _id: user._id,
+            name: user.name
+        }
     });
 
     blog = await blog.save();
@@ -30,9 +39,16 @@ router.post('/', async (req, res) => {
 });
 
 router.put('/:id', auth, async (req, res) => {
+    const user = await User.findById(req.body.userId);
+    if (!user) return res.status(400).send('Invalid user');
+
     const blog = await Blog.findByIdAndUpdate(req.params.id, {
         title: req.body.title,
-        content: req.body.content
+        content: req.body.content,
+        user: {
+            _id: user._id,
+            name: user.name
+        }
     }, { new: true });
 
     if (!blog) return res.status(404).send('No blog with the given ID');

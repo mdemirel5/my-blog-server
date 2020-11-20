@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const Joi = require('joi');
 const Schema = mongoose.Schema;
+const { userSchema } = require('./user');
 
 const blogSchema = new Schema({
     title: {
@@ -14,15 +15,22 @@ const blogSchema = new Schema({
         required: true,
         minlength: 5,
         maxlength: 1000
+    },
+    user: {
+        type: new mongoose.Schema({
+            name: String
+        }),
+        required: true
     }
 });
 
 const Blog = mongoose.model('Blog', blogSchema);
 
-const validateBlog = function(blog){
+const validateBlog = (blog) => {
     const schema = Joi.object({
         title: Joi.string().min(1).max(50).required(),
-        content: Joi.string().min(5).max(1000).required()
+        content: Joi.string().min(5).max(1000).required(),
+        userId: Joi.required()
     });
     return schema.validate(blog);
 }
