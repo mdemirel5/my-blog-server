@@ -1,6 +1,5 @@
 const express = require('express');
 const router = express.Router();
-const mongoose = require('mongoose');
 const { Blog, validateBlog } = require('../models/blog');
 const auth = require('../middleware/auth');
 const { User } = require('../models/user');
@@ -17,7 +16,7 @@ router.get('/:id', async (req, res) => {
     res.send(blog);
 });
 
-router.post('/', async (req, res) => {
+router.post('/', auth, async (req, res) => {
     const { error } = validateBlog(req.body);
     if (error) return res.status(400).send(error.details[0].message);
 

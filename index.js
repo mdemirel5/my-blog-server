@@ -20,7 +20,7 @@ mongoose.connect(database.db, {
     useUnifiedTopology: true,
     useCreateIndex: true
 })
-    .then(console.log('connected to mongoDb successfully', database.db))
+    .then(console.log('connected to mongoDb successfully'))
     .catch('could not connect to mongoDb');
 
 app.use(express.json());
@@ -30,6 +30,7 @@ app.use('/api/users', users);
 app.use('/api/auth', auth);
 require('./prod')(app);
 const port = process.env.PORT || 4000;
+
 const server = app.listen(port, () => console.log(`the app is open on port ${port}`));
 
 module.exports = server;

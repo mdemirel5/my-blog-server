@@ -1,7 +1,6 @@
 const mongoose = require('mongoose');
 const Joi = require('joi');
 const Schema = mongoose.Schema;
-const { userSchema } = require('./user');
 
 const blogSchema = new Schema({
     title: {
@@ -22,7 +21,9 @@ const blogSchema = new Schema({
         }),
         required: true
     }
-});
+
+}, { timestamps: true }
+);
 
 const Blog = mongoose.model('Blog', blogSchema);
 
