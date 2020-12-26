@@ -13,7 +13,7 @@ const likes = require('./routes/likes');
 const partizip2Exs = require('./routes/partizip2Exs');
 const auth = require('./routes/auth');
 
-require('./startup/logging')();
+/* require('./startup/logging')(); */
 
 if (!config.get('jwtPrivateKey')) {
     console.error('FATAL ERROR: jwtPrivateKey is not defined');
