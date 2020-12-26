@@ -2,7 +2,9 @@ const express = require('express');
 const router = express.Router();
 const { Blog, validateBlog } = require('../models/blog');
 const auth = require('../middleware/auth');
+const validateObjectId = require('../middleware/validateObjectId');
 const { User } = require('../models/user');
+
 
 
 router.get('/', async (req, res) => {
@@ -10,7 +12,8 @@ router.get('/', async (req, res) => {
     res.send(blogs);
 });
 
-router.get('/:id', async (req, res) => {
+router.get('/:id', validateObjectId, async (req, res) => {
+
     const blog = await Blog.findById(req.params.id);
     if (!blog) return res.status(404).send('No blog with the given ID')
     res.send(blog);

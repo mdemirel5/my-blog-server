@@ -8,7 +8,12 @@ let database = require('./database/db');
 const app = express();
 const blogs = require('./routes/blogs');
 const users = require('./routes/users');
+const comments = require('./routes/comments');
+const likes = require('./routes/likes');
+const partizip2Exs = require('./routes/partizip2Exs');
 const auth = require('./routes/auth');
+
+require('./startup/logging')();
 
 if (!config.get('jwtPrivateKey')) {
     console.error('FATAL ERROR: jwtPrivateKey is not defined');
@@ -25,8 +30,11 @@ mongoose.connect(database.db, {
 
 app.use(express.json());
 app.use(cors());
-app.use('/blogs', blogs);
+app.use('/api/blogs', blogs);
 app.use('/api/users', users);
+app.use('/api/comments', comments);
+app.use('/api/likes', likes);
+app.use('/api/partizip2exs', partizip2Exs);
 app.use('/api/auth', auth);
 require('./prod')(app);
 const port = process.env.PORT || 4000;
