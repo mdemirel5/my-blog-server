@@ -11,8 +11,7 @@ const likeSchema = new Schema({
 
     postName: {
         type: String,
-        required: true,
-        unique: true
+        required: true
     }
 }, { timestamps: true });
 
